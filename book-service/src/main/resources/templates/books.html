@@ -24,6 +24,8 @@
     <th>Writer</th>
     <th>ISBN</th>
     <th>isAvailable?</th>
+    <th>Transactions</th>
+
   </tr>
   </thead>
   <tbody>
@@ -33,8 +35,62 @@
     <td th:text="${book.writer}">Writer Name</td>
     <td th:text="${book.isbn}">123456789</td>
     <td th:text="${book.available} ? 'Yes' : 'No'">Yes</td>
+    <td>
+      <button th:if="${book.available}"
+              th:attr="onclick=|rentBook('${book.id}')|"
+              class="rent-button">
+        Rent
+      </button>
+      <button th:unless="${book.available}" disabled class="rent-button">
+        Rented
+      </button>
+      <form th:action="@{/ui/books/delete/{id}(id=${book.id})}" method="post" style="display: inline-block; margin-left: 5px;">
+        <button type="submit" class="delete-button" onclick="return confirm('Do you want to delete?')">
+          Sil
+        </button>
+      </form>
+    </td>
   </tr>
   </tbody>
 </table>
+<script>
+  function rentBook(bookId) {
+    const userId = prompt("Enter user id for rent:", "");
+
+    if (userId === null || userId.trim() === "") {
+      alert("user id mandatory.");
+      return;
+    }
+
+    const rentalData = {
+      bookId: parseInt(bookId),
+      userId: parseInt(userId)
+    };
+
+    fetch('http://localhost:8080/api/rentals/rent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(rentalData),
+    })
+            .then(response => {
+              if (response.ok) {
+                alert("Book rented!");
+                window.location.reload();
+              } else {
+                response.json().then(err => {
+                  alert("Error: " + (err.message || "Unkown erorr."));
+                }).catch(() => {
+                  alert("Error: " + response.statusText);
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Network Error.');
+            });
+  }
+</script>
 </body>
 </html>

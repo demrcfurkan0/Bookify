@@ -21,6 +21,7 @@ Add New User </a>
         <th>Fist Name</th>
         <th>Last Name</th>
         <th>E-mail</th>
+        <th>Transactions</th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,16 @@ Add New User </a>
         <td th:text="${user.firstName}">Ali</td>
         <td th:text="${user.lastName}">Veli</td>
         <td th:text="${user.email}">ali@veli.com</td>
+        <td>
+            <form th:action="@{/ui/users/delete/{id}(id=${user.id})}" method="post">
+                <button type="submit" onclick="return confirm('Do you want to delete?')"
+                        style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                    Sil
+                </button>
+                <a th:href="@{/ui/users/{id}/rentals(id=${user.id})}"
+                   style="background-color: #17a2b8; color: white; padding: 6px 10px; text-decoration: none; margin-left: 5px;">
+                    Kiralanan Kitaplar
+                </a>
     </tr>
     </tbody>
 </table>

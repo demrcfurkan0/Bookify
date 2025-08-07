@@ -6,20 +6,23 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - OPTIONS
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-          globalcors:
-            cors-configurations:
-              '[/**]':
-                allowedOrigins: "*"
-                allowedMethods:
-                  - GET
-                  - POST
-                  - PUT
-                  - DELETE
-                allowedHeaders: "*"
+
       routes:
         - id: book-service
           uri: lb://book-service
@@ -66,3 +69,6 @@ springdoc:
         url: /v3/api-docs/book-service
       - name: rental-service
         url: /v3/api-docs/rental-service
+
+#jwt:
+ # secret: ZDM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYg==

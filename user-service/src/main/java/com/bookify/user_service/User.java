@@ -30,4 +30,6 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     @Schema(description = "E-mail ", example = "furkan.demirci@example.com", required = true)
     private String email;
+
+
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class BookUIController {
@@ -33,6 +34,11 @@ public class BookUIController {
     public String addBook(@ModelAttribute Book book) {
         book.setAvailable(true);
         bookRepository.save(book);
+        return "redirect:/ui/books";
+    }
+    @PostMapping("/ui/books/delete/{id}")
+    public String deleteBook(@PathVariable Long id) {
+        bookRepository.deleteById(id);
         return "redirect:/ui/books";
     }
 }

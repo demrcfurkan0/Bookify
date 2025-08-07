@@ -3,7 +3,7 @@ server:
 
 spring:
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    #exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   # application:
   #   name: user-service
   datasource:
@@ -23,6 +23,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
-jwt:
-  secret: dm4wMGR5M1hFUnFOM2M2Tzg3VnhPZz09
-  expiration: 86400000
+logging:
+  level:
+    com.bookify: INFO
+    org.springframework.web: INFO  # Spring Web loglarını da göster
+
+#jwt:
+#  secret: ZDM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYg==
+ # expiration: 86400000

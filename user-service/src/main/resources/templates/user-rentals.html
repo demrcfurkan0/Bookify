@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users rented books</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+<h1><span th:text="${user.firstName} + ' ' + ${user.lastName}"></span> named users rented books.</h1>
+
+<div th:if="${rentedBooks.isEmpty()}">
+    <p>No rented books for this user</p>
+</div>
+
+<table th:unless="${rentedBooks.isEmpty()}">
+    <thead>
+    <tr>
+        <th>Book NAme </th>
+        <th>Writer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${rentedBooks}">
+        <td th:text="${book.bookName}">Book Name</td>
+        <td th:text="${book.writer}">Writer Name</td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/ui/users}">Back to user list</a>
+</body>
+</html>

@@ -20,6 +20,7 @@
     <th>User ID</th>
     <th>Rental Date</th>
     <th>Reurn Datew</th>
+    <th>Transactions</th>
   </tr>
   </thead>
   <tbody>
@@ -29,8 +30,41 @@
     <td th:text="${rental.userId}">202</td>
     <td th:text="${rental.rentalDate}">2025-08-07</td>
     <td th:text="${rental.returnDate}"></td>
+    <td>
+      <button th:if="${rental.returnDate == null}"
+              th:attr="onclick=|returnBook('${rental.id}')|"
+              class="return-button">
+         Return
+      </button>
+    </td>
   </tr>
   </tbody>
 </table>
+<script>
+  function returnBook(rentalId) {
+    if (!confirm("Do you want to return this book?")) {
+      return;
+    }
+
+    fetch('http://localhost:8080/api/rentals/' + rentalId + '/return', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+            .then(response => {
+              if (response.ok) {
+                alert("Book Returned!");
+                window.location.reload();
+              } else {
+                alert("Error: " + response.statusText);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Network Error.');
+            });
+  }
+</script>
 </body>
 </html>

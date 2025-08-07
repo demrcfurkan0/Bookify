@@ -78,5 +78,19 @@ public class BookController {
             book.setAvailable(true);
             bookRepository.save(book);
         }
+
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delets a book", description = "Deletes the book by id.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Book deleted"),
+            @ApiResponse(responseCode = "404", description = "Book not found")
+    })
+    public void deleteBook(@PathVariable Long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found with id: " + id);
+        }
+        bookRepository.deleteById(id);
     }
 }

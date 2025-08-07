@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h1>User List</h1>
+<a href="/ui/users/add" th:href="@{/ui/users/add}" style="display:inline-block; margin-bottom: 1em; padding: 0.7em; color: white; background-color: #28a745; text-decoration: none; border-radius: 4px;">
+Add New User </a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Fist Name</th>
+        <th>Last Name</th>
+        <th>E-mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.firstName}">Ali</td>
+        <td th:text="${user.lastName}">Veli</td>
+        <td th:text="${user.email}">ali@veli.com</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

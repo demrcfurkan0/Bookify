@@ -1,11 +1,11 @@
-package com.bookify.user_service.dto;
+    package com.bookify.user_service.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-public class BookDTO {
-    private String bookName;
-    private String writer;
-}
+    @Data
+    @NoArgsConstructor
+    public class BookDTO {
+        private String bookName;
+        private String writer;
+    }

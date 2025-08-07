@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Yeni Kullanıcı Ekle</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    form { display: flex; flex-direction: column; max-width: 400px; }
+    label { margin-bottom: 0.5em; }
+    input { padding: 0.5em; margin-bottom: 1em; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 0.7em; color: white; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+<!--/*@thymesVar id="user" type="com.bookify.user_service.User"*/-->
+<h1>Add User</h1>
+
+<form action="#" th:action="@{/ui/users/add}" th:object="${user}" method="post">
+  <label for="firstName">First Name:</label>
+  <input type="text" th:field="*{firstName}" id="firstName" placeholder="Enter User's Name">
+
+  <label for="lastName">Last Name:</label>
+  <input type="text" th:field="*{lastName}" id="lastName" placeholder="Enter User's Last Name">
+
+  <label for="email">E-mail:</label>
+  <input type="email" th:field="*{email}" id="email" placeholder="Enter E-mail">
+
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Book</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .form-container { max-width: 500px; }
+    .form-group { margin-bottom: 1em; }
+    .form-group label { display: block; margin-bottom: 0.5em; }
+    .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
+    .btn { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+<!--/*@thymesVar id="book" type="com.bookify.book_service.Book"*/-->
+<h1>Add New Book</h1>
+<div class="form-container">
+  <form th:action="@{/ui/books/add}" th:object="${book}" method="post">
+    <div class="form-group">
+      <label for="bookName">Book Name:</label>
+      <input type="text" id="bookName" th:field="*{bookName}">
+    </div>
+    <div class="form-group">
+      <label for="writer">Writer:</label>
+      <input type="text" id="writer" th:field="*{writer}">
+    </div>
+    <div class="form-group">
+      <label for="isbn">ISBN:</label>
+      <input type="text" id="isbn" th:field="*{isbn}">
+    </div>
+    <button type="submit" class="btn">Save Book</button>
+  </form>
+</div>
+</body>
+</html>

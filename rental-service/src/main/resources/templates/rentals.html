@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rentals</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+<h1>Rental History</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Rental ID</th>
+    <th>Book ID</th>
+    <th>User ID</th>
+    <th>Rental Date</th>
+    <th>Reurn Datew</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="rental : ${rentalList}">
+    <td th:text="${rental.id}">1</td>
+    <td th:text="${rental.bookId}">101</td>
+    <td th:text="${rental.userId}">202</td>
+    <td th:text="${rental.rentalDate}">2025-08-07</td>
+    <td th:text="${rental.returnDate}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -10,7 +10,16 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins: "*"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                allowedHeaders: "*"
       routes:
         - id: book-service
           uri: lb://book-service
@@ -27,7 +36,33 @@ spring:
           predicates:
             - Path=/api/rentals/**
 
+        - id: openapi
+          uri: http://localhost:8080
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: user-service
+        url: /v3/api-docs/user-service
+      - name: book-service
+        url: /v3/api-docs/book-service
+      - name: rental-service
+        url: /v3/api-docs/rental-service

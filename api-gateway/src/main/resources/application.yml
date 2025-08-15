@@ -23,29 +23,6 @@ spring:
           enabled: true
           lower-case-service-id: true
 
-      routes:
-        - id: book-service
-          uri: lb://book-service
-          predicates:
-            - Path=/api/books/**
-
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/users/**
-
-        - id: rental-service
-          uri: lb://rental-service
-          predicates:
-            - Path=/api/rentals/**
-
-        - id: openapi
-          uri: http://localhost:8080
-          predicates:
-            - Path=/v3/api-docs/**
-          filters:
-            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-
 eureka:
   client:
     service-url:
@@ -70,5 +47,6 @@ springdoc:
       - name: rental-service
         url: /v3/api-docs/rental-service
 
-#jwt:
- # secret: ZDM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYg==
+jwt:
+  secret: ZDM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYjM0ZGUyYg==
+  expiration: 86400000

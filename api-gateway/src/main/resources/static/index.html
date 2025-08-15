@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookify Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      display: flex;
+      gap: 2rem;
+      background-color: #f8f9fa;
+    }
+    .main-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .controls, .management-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    h1, h2, h3 {
+      margin: 0 0 1rem 0;
+      color: #333;
+    }
+    #results-container {
+      flex-grow: 1;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-height: 300px;
+      width: 60vw;
+    }
+    button, .button-link {
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white !important;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    button:hover, .button-link:hover {
+      background-color: #0056b3;
+    }
+    pre {
+      background-color: #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+<div class="main-content">
+  <h1>Bookify Dashboard</h1>
+
+  <div class="management-links">
+    <h3>Management Panels</h3>
+    <a href="/ui/books" class="button-link">Book Management</a>
+    <a href="/ui/users" class="button-link">User Management</a>
+    <a href="/ui/rentals" class="button-link">Rental Management</a>
+  </div>
+
+  <div class="controls">
+    <h3>List Data</h3>
+    <button onclick="getBooks()">List All Books</button>
+    <button onclick="getUsers()">List All Users</button>
+    <button onclick="getRentals()">List User Rentals (ID:1)</button>
+  </div>
+</div>
+
+<div id="results-container">
+  <h2>Results</h2>
+  <pre id="results-output">Click a button to see the results here...</pre>
+</div>
+
+<script>
+  const resultsOutput = document.getElementById('results-output');
+
+  async function fetchData(endpoint) {
+    const token = localStorage.getItem('jwtToken');
+    resultsOutput.textContent = 'Loading...';
+    if (!token) {
+      alert('You are not logged in! Token not found.');
+      window.location.href = '/login.html';
+      return null;
+    }
+    try {
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        return await response.json();
+      } else if (response.status === 401) {
+        alert('Your session has expired or you are not authorized. Please login again.');
+        window.location.href = '/login.html';
+      } else {
+        resultsOutput.textContent = `Error: Failed to fetch data. Status: ${response.status}`;
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      resultsOutput.textContent = 'An error occurred while trying to fetch data.';
+    }
+    return null;
+  }
+
+  async function getBooks() {
+    const data = await fetchData('/api/books');
+    if (data) {
+      resultsOutput.textContent = JSON.stringify(data, null, 2);
+    }
+  }
+
+  async function getUsers() {
+    const data = await fetchData('/api/users');
+    if (data) {
+      resultsOutput.textContent = JSON.stringify(data, null, 2);
+    }
+  }
+
+  async function getRentals() {
+    const data = await fetchData('/api/rentals/user/1');
+    if (data) {
+      resultsOutput.textContent = JSON.stringify(data, null, 2);
+    }
+  }
+</script>
+</body>
+</html>

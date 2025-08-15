@@ -1,28 +1,18 @@
-package com.bookify.user_service;
+package com.bookify.auth_service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String firstName;
     private String lastName;
-
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
-
-    @JsonIgnore
     private String password;
 }

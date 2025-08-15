@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookify Login</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        input { display: block; width: 250px; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ddd; }
+        button { width: 100%; padding: 10px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #message { margin-top: 15px; color: red; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="message"></p>
+</div>
+
+<script>
+    async function login() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = '';
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('jwtToken', data.token);
+                messageDiv.style.color = 'green';
+                messageDiv.textContent = 'Login successful! Redirecting...';
+
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 1000);
+
+            } else {
+                messageDiv.textContent = 'Login failed! Check credentials.';
+            }
+        } catch (error) {
+            messageDiv.textContent = 'An error occurred during login.';
+            console.error('Login Error:', error);
+        }
+    }
+</script>
+</body>
+</html>
